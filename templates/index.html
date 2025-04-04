@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor MP4 a MP3</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Conversor MP4 a MP3</h1>
+        </header>
+        
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button class="tab-button active" data-tab="converter">Convertir</button>
+                <button class="tab-button" data-tab="library">Biblioteca</button>
+                <button class="tab-button" data-tab="downloader">YouTube</button>
+            </div>
+            
+            <div class="tab-content active" id="converter-tab">
+                <div class="card">
+                    <div class="file-selector">
+                        <h3 id="file-label">Selecciona un video</h3>
+                        <button id="file-button" class="fab-button">
+                            <span class="material-icons">attach_file</span>
+                        </button>
+                        <input type="file" id="file-input" accept=".mp4,.avi,.mkv,.mov" style="display: none;">
+                    </div>
+                    
+                    <div class="quality-selector">
+                        <label for="quality-select">Calidad de audio:</label>
+                        <select id="quality-select">
+                            <option value="64k">Baja (64 kbps)</option>
+                            <option value="128k" selected>Media (128 kbps)</option>
+                            <option value="320k">Alta (320 kbps)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="rename-section">
+                        <input type="text" id="rename-input" placeholder="Nombre del archivo MP3 (sin extensión)">
+                        <button id="convert-button" class="primary-button">Convertir a MP3</button>
+                    </div>
+
+                    <!-- Añade esto en la sección del convertidor -->
+                    <div id="conversion-progress" style="display: none;">
+                        <div class="progress-container">
+                            <div class="progress-header">
+                                <h4>Convirtiendo a MP3...</h4>
+                                <div class="progress-details">
+                                    <span id="progress-percent">0%</span>
+                                    <span id="progress-time">00:00</span>
+                                </div>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="conversion-bar"></div>
+                            </div>
+                            <div class="progress-info">
+                                <span id="progress-filename">Archivo: </span>
+                                <span id="progress-speed">Velocidad: -</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="library-tab">
+                <div class="card">
+                    <h3>Tu biblioteca de audios</h3>
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Buscar en biblioteca...">
+                        <span class="material-icons">search</span>
+                    </div>
+                    <div id="history-list" class="history-list"></div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="downloader-tab">
+                <div class="card">
+                    <h3>Descargar desde YouTube</h3>
+                    <div class="url-input">
+                        <input type="text" id="youtube-url" placeholder="Ingresa URL de YouTube">
+                        <small>Ejemplo: https://www.youtube.com/watch?v=...</small>
+                    </div>
+                    <button id="download-button" class="primary-button">Descargar</button>
+                    <div id="download-progress" class="progress-container" style="display: none;">
+                        <div class="progress-bar"></div>
+                        <div class="progress-text">Preparando descarga...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Dialog -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Título del modal</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="modal-message">Mensaje del modal</p>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-confirm" class="primary-button">Aceptar</button>
+                <button id="modal-cancel" class="secondary-button">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Rename Dialog -->
+    <div id="rename-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Renombrar archivo</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="rename-modal-input" placeholder="Nuevo nombre sin extensión">
+                <small>No incluyas la extensión .mp3</small>
+            </div>
+            <div class="modal-footer">
+                <button id="rename-confirm" class="primary-button">Guardar</button>
+                <button id="rename-cancel" class="secondary-button">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
